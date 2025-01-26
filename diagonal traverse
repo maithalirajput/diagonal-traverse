@@ -1,0 +1,50 @@
+class Solution {
+    public int[] findDiagonalOrder(int[][] mat) {
+        if (mat == null || mat.length == 0) {
+            return new int[0];
+        }
+
+        int m = mat.length;
+        int n = mat[0].length;
+        int[] result = new int[m * n];
+        int index = 0;
+
+        // Direction toggle: 1 = upward, -1 = downward
+        int direction = 1;
+
+        int row = 0, col = 0;
+
+        while (index < m * n) {
+            result[index++] = mat[row][col];
+
+            // Moving upward
+            if (direction == 1) {
+                if (col == n - 1) {  // Hit the right boundary
+                    row++;
+                    direction = -1;  // Switch to downward
+                } else if (row == 0) {  // Hit the top boundary
+                    col++;
+                    direction = -1;  // Switch to downward
+                } else {  // Normal case for upward movement
+                    row--;
+                    col++;
+                }
+            }
+            // Moving downward
+            else {
+                if (row == m - 1) {  // Hit the bottom boundary
+                    col++;
+                    direction = 1;  // Switch to upward
+                } else if (col == 0) {  // Hit the left boundary
+                    row++;
+                    direction = 1;  // Switch to upward
+                } else {  // Normal case for downward movement
+                    row++;
+                    col--;
+                }
+            }
+        }
+
+        return result;
+    }
+}
